@@ -53,7 +53,7 @@ export class ApplianceEditComponent implements OnInit{
      .updateAppliance(+this.id, appliance)
      .pipe(first())
      .subscribe(() => {
-       alert('Appliance successfully created!');
+       alert('Appliance successfully edited!');
        this.router.navigate(['../'], { relativeTo: this.route });
      });
   }
