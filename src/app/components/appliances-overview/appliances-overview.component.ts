@@ -3,11 +3,12 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { combineLatest, filter } from 'rxjs';
+import { combineLatest, filter, first } from 'rxjs';
 import { ApplianceCategory } from 'src/app/models/appliance-category.model';
 import { Appliance } from 'src/app/models/appliance.model';
 import { ApplianceCategoryService } from 'src/app/services/appliance-category.service';
 import { ApplianceService } from 'src/app/services/appliances.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 @Component({
   selector: 'app-appliances-overview',
   templateUrl: './appliances-overview.component.html',
@@ -23,6 +24,8 @@ export class AppliancesOverviewComponent implements OnInit, AfterViewInit{
     'count',
     'actions',
   ];
+
+  hiddenColumnsMobile = ['id', 'applianceCategory', 'active'];
   dataSource = new MatTableDataSource<Appliance>();
   appliances: Appliance[] = [];
   appliancesCount: number = 0;
@@ -34,9 +37,17 @@ export class AppliancesOverviewComponent implements OnInit, AfterViewInit{
     private applianceService: ApplianceService,
     private applianceCategoryService: ApplianceCategoryService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute, 
+    private breakpointObserver: BreakpointObserver) { }
   ngOnInit(): void {
     this.getAppliances(10, 0, null, null);
+    this.breakpointObserver
+    .observe([Breakpoints.XSmall])
+    .pipe(first())
+    .subscribe(result => {
+      this.columns = result.matches ? this.columns.filter(c => !this.hiddenColumnsMobile.includes(c)) :
+      this.columns;
+    });
   }
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
@@ -84,6 +95,24 @@ export class AppliancesOverviewComponent implements OnInit, AfterViewInit{
 
   onPageChanged(event: PageEvent): void{
     this.getAppliances(event.pageSize, event.pageIndex * event.pageSize, this.sort.active, this.sort.direction);
+  }
+
+  onDelete(id: number, event: Event): void {
+    event.stopPropagation();
+    if (confirm('Are you sure you want to delete this appliance?')){
+        this.applianceService
+        .deleteAppliance(id)
+        .pipe(first())
+        .subscribe(() => {
+          alert('Appliance succesfully deleted!');
+          this.getAppliances(
+            this.paginator.pageSize,
+            this.paginator.pageIndex * this.paginator.pageSize,
+            this.sort.active,
+            this.sort.direction
+          );
+        })
+    }
   }
   sortData(event: Sort) {
     this.getAppliances(this.paginator.pageSize, 0, event.active, event.direction);

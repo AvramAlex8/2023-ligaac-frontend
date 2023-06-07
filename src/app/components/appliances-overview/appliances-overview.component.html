@@ -42,6 +42,9 @@
             <button mat-icon-button (click)="onNavigateToEdit(element)">
                 <mat-icon>edit</mat-icon>
             </button>
+            <button color="warn" mat-icon-button (click)="onDelete(element.id, $event)">
+              <mat-icon>delete</mat-icon>
+          </button>
         </td>
     </ng-container>
   

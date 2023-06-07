@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-4 items-center">
-    <mat-card class="w-1/2">
+    <mat-card class="lg:w-1/2 w-full">
       <mat-card-header class="items-center">
         <button mat-icon-button [routerLink]="['../']">
           <mat-icon>arrow_back</mat-icon>
@@ -46,21 +46,21 @@
         </div>
       </mat-card-content>
     </mat-card>
-    <mat-card>
+    <mat-card class="lg:w-1/2 max-w-full">
       <mat-card-header>
         <mat-card-title>
           Consumption Report
         </mat-card-title>
       </mat-card-header>
-      <mat-card-content>
+      <mat-card-content class="mr-5 mt-1">
         <ngx-charts-line-chart 
         [results]="consumptionData"
         [yAxis] = "true"
-        [yAxisLabel]="'Consumption Wh'"
+        [yAxisLabel]="'Consumption W/h'"
         [showYAxisLabel] = "true"
-        [xAxis]="true"
+        [xAxis]="false"
         [xAxisLabel]="'Date'"
-        [showXAxisLabel]="true" > 
+        [showXAxisLabel]="false" > 
         </ngx-charts-line-chart>
       </mat-card-content>
     </mat-card>
