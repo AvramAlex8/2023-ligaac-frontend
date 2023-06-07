@@ -18,8 +18,8 @@ export class ApplianceSharedComponent {
     return this.form.get('name') as FormControl<string>;
   }
 
-  get consumption(): FormControl<number> {
-    return this.form.get('consumption') as FormControl<number>;
+  get consumptionWh(): FormControl<number> {
+    return this.form.get('consumptionWh') as FormControl<number>;
   }
 
   get count(): FormControl<number> {

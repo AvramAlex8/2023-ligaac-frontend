@@ -15,14 +15,14 @@
     <mat-label>Consumption (W/h)</mat-label>
     <input 
       matInput
-      [formControl]="consumption"
+      [formControl]="consumptionWh"
       type="number"
       required
       [min]="0.01"
       [max]="99999">
-      <mat-error *ngIf="formControlHasError(consumption, 'required')">Field required</mat-error>
-      <mat-error *ngIf="formControlHasError(consumption, 'min')">Must be at let 0.01</mat-error>
-      <mat-error *ngIf="formControlHasError(consumption, 'max')">Must be at most 99999</mat-error>
+      <mat-error *ngIf="formControlHasError(consumptionWh, 'required')">Field required</mat-error>
+      <mat-error *ngIf="formControlHasError(consumptionWh, 'min')">Must be at let 0.01</mat-error>
+      <mat-error *ngIf="formControlHasError(consumptionWh, 'max')">Must be at most 99999</mat-error>
   </mat-form-field>
 
   <mat-form-field>

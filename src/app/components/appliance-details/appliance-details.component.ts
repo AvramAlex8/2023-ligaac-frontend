@@ -4,6 +4,7 @@ import { concatMap, filter, first, tap } from 'rxjs';
 import { Appliance } from 'src/app/models/appliance.model';
 import { ApplianceCategoryService } from 'src/app/services/appliance-category.service';
 import { ApplianceService } from 'src/app/services/appliances.service';
+import { ConsumptionService } from 'src/app/services/consumption.service';
 
 @Component({
   selector: 'app-appliance-details',
@@ -12,10 +13,12 @@ import { ApplianceService } from 'src/app/services/appliances.service';
 })
 export class ApplianceDetailsComponent implements OnInit {
   public appliance: Appliance | null = null;
-  
+  public consumptionData: any[] = [];
+
   constructor(
     private applianceService: ApplianceService,
     private applianceCategoryService: ApplianceCategoryService,
+    private consumptionService: ConsumptionService,
     private route: ActivatedRoute,
     private router: Router
     ) { }
@@ -38,9 +41,27 @@ export class ApplianceDetailsComponent implements OnInit {
           if (this.appliance){
             this.appliance.applianceCategory = applianceCategory;
           }
-        }))
-        .subscribe();
+        }),
+        concatMap(() => this.consumptionService.getConsumptionReportForAppliance(+id)))
+        .subscribe(consumption => {
+          if(this.appliance)
+          {
+            this.consumptionData = [
+              {
+                name: this.appliance?.name,
+                series: consumption.sort((c1, c2) => new Date(c1.startDate).getTime() - new Date(c2.startDate).getTime())
+                .map(c => { 
+                  return {
+                  name: `${c.startDate.toDateString()} - ${c.endDate}`,
+                  value: c.consumptionWh
+                  } 
+                  
+            })
+            
+          }
+        ]
+          } 
+        });
     });
   }
- 
 }

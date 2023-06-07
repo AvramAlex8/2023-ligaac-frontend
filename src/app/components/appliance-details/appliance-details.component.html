@@ -46,4 +46,22 @@
         </div>
       </mat-card-content>
     </mat-card>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          Consumption Report
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ngx-charts-line-chart 
+        [results]="consumptionData"
+        [yAxis] = "true"
+        [yAxisLabel]="'Consumption Wh'"
+        [showYAxisLabel] = "true"
+        [xAxis]="true"
+        [xAxisLabel]="'Date'"
+        [showXAxisLabel]="true" > 
+        </ngx-charts-line-chart>
+      </mat-card-content>
+    </mat-card>
   </div>

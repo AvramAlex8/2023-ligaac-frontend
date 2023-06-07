@@ -53,8 +53,7 @@ export class AppliancesOverviewComponent implements OnInit, AfterViewInit{
         this.appliancesCount = appliancesResult.totalCount;
         this.matchApplianceCategory(appliancesResult.appliances, applianceCategories);
         this.appliances = appliancesResult.appliances;
-        this.dataSource.data = this.appliances;
-      }
+        }
     )
   }
   private matchApplianceCategory(
