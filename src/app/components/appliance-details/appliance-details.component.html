@@ -1,0 +1,49 @@
+<div class="flex flex-col gap-4 items-center">
+    <mat-card class="w-1/2">
+      <mat-card-header class="items-center">
+        <button mat-icon-button [routerLink]="['../']">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <span class="p-2">Appliance Details</span>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="flex flex-col">
+          <section>
+            <span>Name&colon;</span>
+            <span> {{ appliance?.name }}</span>
+          </section>
+          <section>
+            <span>
+              Consumption&colon;
+            </span>
+            <span>
+              {{ appliance?.consumptionWh }} Wh
+            </span>
+          </section>
+          <section>
+            <span>
+              Number of devices&colon;
+            </span>
+            <span>
+              {{ appliance?.count }}
+            </span>
+          </section>
+          <section>
+            <div class="flex flex-row">
+              <div>Enabled&colon;</div>
+              <mat-icon *ngIf="appliance?.active" color="primary">toggle_on</mat-icon>
+              <mat-icon *ngIf="!appliance?.active" color="warn">toggle_off</mat-icon>
+            </div>
+          </section>
+          <section>
+            <span>
+              Category&colon;
+            </span>
+            <span>
+              {{ appliance?.applianceCategory?.name }}
+            </span>
+          </section>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>

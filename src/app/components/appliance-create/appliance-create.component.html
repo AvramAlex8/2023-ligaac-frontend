@@ -1,0 +1,24 @@
+<form 
+[formGroup]="form" 
+(ngSubmit)="onSubmit()"
+class="flex flex-col items-center">
+    <mat-card class="w-1/2">
+        <mat-card-header class="items-center">
+            <button mat-icon-button [routerLink]="['../']">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <span class="p-2 text-lg">Create Appliance</span>
+        </mat-card-header>
+        <mat-card-content>
+            <app-appliance-shared 
+            [form]="form" 
+            [applianceCategories]="(applianceCategories$ | async) || []">
+            </app-appliance-shared>
+        </mat-card-content>
+        <mat-card-actions class="justify-center">
+            <button mat-flat-button color="primary" [disabled]="form.invalid || form.pristine" type="submit">
+                Submit
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</form>

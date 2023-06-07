@@ -1,0 +1,58 @@
+<form [formGroup]="form" class="flex flex-col items-center gap-1">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input 
+      matInput
+      [formControl]="name"
+      type="text"
+      required
+      [maxLength]="128">
+      <mat-error *ngIf="formControlHasError(name, 'required')">Field required</mat-error>
+      <mat-error *ngIf="formControlHasError(name, 'maxLength')">Field must be at most 128 characters long.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Consumption (W/h)</mat-label>
+    <input 
+      matInput
+      [formControl]="consumption"
+      type="number"
+      required
+      [min]="0.01"
+      [max]="99999">
+      <mat-error *ngIf="formControlHasError(consumption, 'required')">Field required</mat-error>
+      <mat-error *ngIf="formControlHasError(consumption, 'min')">Must be at let 0.01</mat-error>
+      <mat-error *ngIf="formControlHasError(consumption, 'max')">Must be at most 99999</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+      <mat-label>Count</mat-label>
+      <input 
+        matInput
+        [formControl]="count"
+        type="number"
+        required
+        [min]="1"
+        [max]="999">
+      <mat-error *ngIf="formControlHasError(count, 'required')">Field Required</mat-error>
+      <mat-error *ngIf="formControlHasError(count, 'min')">Must be at least 1.</mat-error>
+      <mat-error *ngIf="formControlHasError(count, 'max')">Must be at most 999.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+      <mat-label>Category</mat-label>
+      <mat-select [formControl]="applianceCategoryId" name="applianceCategory">
+          <mat-option *ngFor="let applianceCategory of applianceCategories" [value]="applianceCategory.id">
+            {{applianceCategory.name}}
+          </mat-option>
+      </mat-select>
+      <mat-error *ngIf="formControlHasError(applianceCategoryId, 'required')">Field Required</mat-error>
+  </mat-form-field>
+
+  <section>
+      <mat-slide-toggle formControlName="active" color="primary" [checked]="active.value">
+        Active
+      </mat-slide-toggle>
+      <mat-error *ngIf="formControlHasError(active, 'required')">Field Required</mat-error>
+  </section>
+</form>
